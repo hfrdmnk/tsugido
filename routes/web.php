@@ -18,6 +18,10 @@ Route::get('/today', function () {
     return Inertia::render('Today');
 })->middleware(['auth', 'verified'])->name('today');
 
+Route::get('/archive', function () {
+    return Inertia::render('Archive');
+})->middleware(['auth', 'verified'])->name('archive');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
