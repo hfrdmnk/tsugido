@@ -13,7 +13,7 @@ createInertiaApp({
     setup({ el, App, props }) {
         if (import.meta.env.DEV) {
             createRoot(el).render(<App {...props} />);
-            return
+            return;
         }
 
         hydrateRoot(el, <App {...props} />);
