@@ -1,11 +1,15 @@
 import Key from '@/Components/key';
 import { cn } from '@/lib/utils';
 import { User } from '@/types';
-import { Link, usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { PropsWithChildren } from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 export default function App({ children }: PropsWithChildren<{ user: User }>) {
     const { url } = usePage();
+
+    useHotkeys('a', () => router.visit(route('archive')));
+    useHotkeys('t', () => router.visit(route('today')));
 
     const linkClasses = (href: string) => {
         return cn(
