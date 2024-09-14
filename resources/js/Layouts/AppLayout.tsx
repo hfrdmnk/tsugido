@@ -19,7 +19,7 @@ export default function App({ children }: PropsWithChildren<{ user: User }>) {
     };
 
     return (
-        <div className="min-h-screen">
+        <div className="flex min-h-screen flex-col">
             <nav className="container flex items-center justify-center py-8">
                 <ul className="flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground">
                     <li>
@@ -35,6 +35,15 @@ export default function App({ children }: PropsWithChildren<{ user: User }>) {
                 </ul>
             </nav>
             <main>{children}</main>
+            <footer className="container mt-auto py-8 text-center text-sm text-muted-foreground">
+                <p>
+                    A{' '}
+                    <a href="https://linea.studio" target="_blank">
+                        Linea
+                    </a>{' '}
+                    projektli.
+                </p>
+            </footer>
         </div>
     );
 }
