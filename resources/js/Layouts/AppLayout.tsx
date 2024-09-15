@@ -19,23 +19,30 @@ export default function App({ children }: PropsWithChildren<{ user: User }>) {
     };
 
     return (
-        <div className="flex min-h-screen flex-col">
-            <nav className="container flex items-center justify-center py-8">
-                <ul className="flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground">
-                    <li>
-                        <Link href={route('archive')} className={linkClasses('/archive')}>
-                            Archive <Key>a</Key>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href={route('today')} className={linkClasses('/today')}>
-                            Today <Key>t</Key>
-                        </Link>
-                    </li>
-                </ul>
-            </nav>
-            <main>{children}</main>
-            <footer className="container mt-auto py-8 text-center text-sm text-muted-foreground">
+        <div className="flex flex-col">
+            <div className="fixed left-0 w-full bg-gradient-to-b from-background to-background/0">
+                <nav className="container flex items-center justify-center py-8">
+                    <ul className="flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground">
+                        <li>
+                            <Link href={route('archive')} className={linkClasses('/archive')}>
+                                Archive <Key>a</Key>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href={route('today')} className={linkClasses('/today')}>
+                                Today <Key>t</Key>
+                            </Link>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <main className="flex min-h-screen flex-col pt-28">{children}</main>
+            <footer
+                className={cn(
+                    'container mt-auto py-8 text-center text-sm text-muted-foreground',
+                    url === '/today' && 'mb-24',
+                )}
+            >
                 <p>
                     A{' '}
                     <a href="https://linea.studio" target="_blank">
