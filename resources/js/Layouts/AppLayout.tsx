@@ -1,4 +1,5 @@
 import Key from '@/Components/key';
+import { Toaster } from '@/Components/ui/sonner';
 import { cn } from '@/lib/utils';
 import { User } from '@/types';
 import { Link, router, usePage } from '@inertiajs/react';
@@ -51,6 +52,7 @@ export default function App({ children }: PropsWithChildren<{ user: User }>) {
                     projektli.
                 </p>
             </footer>
+            <Toaster position="top-right" />
         </div>
     );
 }

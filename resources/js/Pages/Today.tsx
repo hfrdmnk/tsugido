@@ -3,11 +3,13 @@ import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
 import App from '@/Layouts/AppLayout';
 import { PageProps } from '@/types';
+import { Todo } from '@/types/models';
 import { useForm } from '@inertiajs/react';
 import { useRef } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { toast } from 'sonner';
 
-export default function Today({ auth }: PageProps) {
+export default function Today({ auth, todos }: PageProps<{ todos: Todo[] }>) {
     const inputRef = useRef<HTMLInputElement>(null);
 
     useHotkeys('space', (event) => {
@@ -30,7 +32,7 @@ export default function Today({ auth }: PageProps) {
     useHotkeys(
         'enter',
         (event) => {
-            alert('Submit the form');
+            handleSubmit(event as unknown as React.FormEvent<HTMLFormElement>);
         },
         { enableOnFormTags: true },
     );
@@ -40,9 +42,12 @@ export default function Today({ auth }: PageProps) {
     });
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        console.log(data);
-        reset('title');
+        if (data.title.length >= 3) {
+            e.preventDefault();
+            post(route('today.store'));
+            toast.success('Todo added successfully');
+            reset('title');
+        }
     };
 
     return (
@@ -62,7 +67,7 @@ export default function Today({ auth }: PageProps) {
                                     ref={inputRef}
                                 />
                             </div>
-                            <Button type="submit" disabled={processing || data.title.length < 1}>
+                            <Button type="submit" disabled={processing || data.title.length < 3}>
                                 Add Todo
                             </Button>
                         </form>
