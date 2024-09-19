@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TodoController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -14,13 +15,11 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/today', function () {
-    return Inertia::render('Today');
-})->middleware(['auth', 'verified'])->name('today');
+Route::get('/today', [TodoController::class, 'index'])->middleware(['auth', 'verified'])->name('today');
 
-Route::get('/archive', function () {
-    return Inertia::render('Archive');
-})->middleware(['auth', 'verified'])->name('archive');
+Route::post('/today', [TodoController::class, 'store'])->middleware(['auth', 'verified'])->name('today.store');
+
+Route::get('/archive', [TodoController::class, 'archiveIndex'])->middleware(['auth', 'verified'])->name('archive');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

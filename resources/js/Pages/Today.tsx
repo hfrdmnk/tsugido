@@ -18,6 +18,16 @@ export default function Today({ auth }: PageProps) {
     });
 
     useHotkeys(
+        'esc',
+        () => {
+            if (inputRef.current && document.activeElement === inputRef.current) {
+                inputRef.current.blur();
+            }
+        },
+        { enableOnFormTags: ['INPUT'] },
+    );
+
+    useHotkeys(
         'enter',
         (event) => {
             alert('Submit the form');
