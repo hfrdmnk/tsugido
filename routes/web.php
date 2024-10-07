@@ -19,6 +19,8 @@ Route::get('/today', [TodoController::class, 'index'])->middleware(['auth', 'ver
 
 Route::post('/today', [TodoController::class, 'store'])->middleware(['auth', 'verified'])->name('today.store');
 
+Route::patch('/todo/{id}', [TodoController::class, 'update'])->middleware(['auth', 'verified'])->name('todos.update');
+
 Route::get('/archive', [TodoController::class, 'archiveIndex'])->middleware(['auth', 'verified'])->name('archive');
 
 Route::get('/dashboard', function () {

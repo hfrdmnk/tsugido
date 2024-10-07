@@ -1,3 +1,4 @@
+import TodoItem from '@/Components/tsugido/todoItem';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
@@ -54,13 +55,18 @@ export default function Today({ auth, todos }: PageProps<{ todos: Todo[] }>) {
         <App user={auth.user}>
             <div className="container mx-auto flex-1 px-4">
                 <h1 className="text-2xl font-semibold">Today</h1>
+                <div className="mt-2 flex flex-1 flex-col gap-2">
+                    {todos.map((todo) => (
+                        <TodoItem todo={todo} key={todo.id} />
+                    ))}
+                </div>
                 <div className="fixed bottom-0 left-0 w-full bg-gradient-to-t from-background to-background/0">
                     <div className="container py-8">
                         <form onSubmit={handleSubmit} className="flex items-end gap-2">
                             <div className="flex flex-1 flex-col gap-2">
                                 <Label htmlFor="todo-title">Add a new todo</Label>
                                 <Input
-                                    placeholder="Focus with [space]"
+                                    placeholder="What needs to be done?"
                                     id="todo-title"
                                     value={data.title}
                                     onChange={(e) => setData('title', e.target.value)}

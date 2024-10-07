@@ -1,4 +1,3 @@
-import Key from '@/Components/key';
 import { Toaster } from '@/Components/ui/sonner';
 import { cn } from '@/lib/utils';
 import { User } from '@/types';
@@ -26,12 +25,12 @@ export default function App({ children }: PropsWithChildren<{ user: User }>) {
                     <ul className="flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground">
                         <li>
                             <Link href={route('archive')} className={linkClasses('/archive')}>
-                                Archive <Key>a</Key>
+                                Archive
                             </Link>
                         </li>
                         <li>
                             <Link href={route('today')} className={linkClasses('/today')}>
-                                Today <Key>t</Key>
+                                Today
                             </Link>
                         </li>
                     </ul>
