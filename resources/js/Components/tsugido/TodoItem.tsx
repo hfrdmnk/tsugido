@@ -1,8 +1,9 @@
-import { Checkbox } from '@/Components/ui/checkbox';
+import { Checkbox } from '@/Components/tsugido/Checkbox';
+import { cn } from '@/lib/utils';
 import { Todo } from '@/types/models';
 import { router } from '@inertiajs/react';
 
-export default function TodoItem({ todo }: { todo: Todo }) {
+export default function TodoItem({ todo, isFocus }: { todo: Todo; isFocus?: boolean }) {
     const handleCheckChange = () => {
         router.patch(route('todos.update', todo.id), {
             completed: !todo.completed,
@@ -10,9 +11,18 @@ export default function TodoItem({ todo }: { todo: Todo }) {
     };
 
     return (
-        <div className="flex items-center gap-2 rounded-sm p-1">
-            <Checkbox checked={todo.completed} onCheckedChange={handleCheckChange} />
-            <span className="flex-1">{todo.title}</span>
+        <div className="-mx-1 flex items-center gap-3 rounded-sm p-1">
+            <Checkbox
+                checked={todo.completed}
+                onCheckedChange={handleCheckChange}
+                className={cn(
+                    isFocus &&
+                        'border-emerald-500 data-[state=checked]:border-emerald-500 data-[state=checked]:bg-emerald-500',
+                )}
+            />
+            <span className="flex-1 cursor-pointer select-none" onClick={handleCheckChange}>
+                {todo.title}
+            </span>
         </div>
     );
 }
