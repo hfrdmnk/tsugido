@@ -6,6 +6,7 @@ import App from '@/Layouts/AppLayout';
 import { PageProps } from '@/types';
 import { Todo } from '@/types/models';
 import { useForm } from '@inertiajs/react';
+import { AnimatePresence } from 'framer-motion';
 import { Fragment, useRef } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { toast } from 'sonner';
@@ -56,20 +57,22 @@ export default function Today({ auth, todos }: PageProps<{ todos: Todo[] }>) {
             <div className="container mx-auto flex-1 px-4">
                 <h1 className="text-2xl font-semibold">Today</h1>
                 <div className="mt-4 flex flex-1 flex-col gap-2">
-                    {todos.map((todo, index) => (
-                        <Fragment key={todo.id}>
-                            {index === 0 && !todo.completed && (
-                                <Label className="text-muted-foreground">Your current focus</Label>
-                            )}
-                            {index === 1 && !todo.completed && (
-                                <Label className="mt-2 text-muted-foreground">Up next</Label>
-                            )}
-                            {todo.completed && todos.findIndex((t) => t.completed) === index && (
-                                <Label className="mt-2 text-muted-foreground">Completed</Label>
-                            )}
-                            <TodoItem todo={todo} isFocus={index === 0 && !todo.completed} />
-                        </Fragment>
-                    ))}
+                    <AnimatePresence>
+                        {todos.map((todo, index) => (
+                            <Fragment key={todo.id}>
+                                {index === 0 && !todo.completed && (
+                                    <Label className="text-muted-foreground">Your current focus</Label>
+                                )}
+                                {index === 1 && !todo.completed && (
+                                    <Label className="mt-2 text-muted-foreground">Up next</Label>
+                                )}
+                                {todo.completed && todos.findIndex((t) => t.completed) === index && (
+                                    <Label className="mt-2 text-muted-foreground">Completed</Label>
+                                )}
+                                <TodoItem todo={todo} isFocus={index === 0 && !todo.completed} />
+                            </Fragment>
+                        ))}
+                    </AnimatePresence>
                 </div>
                 <div className="fixed bottom-0 left-0 w-full bg-gradient-to-t from-background to-background/0">
                     <div className="container py-8">

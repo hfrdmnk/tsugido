@@ -2,6 +2,7 @@ import { Checkbox } from '@/Components/tsugido/Checkbox';
 import { cn } from '@/lib/utils';
 import { Todo } from '@/types/models';
 import { router } from '@inertiajs/react';
+import { motion } from 'framer-motion';
 
 export default function TodoItem({ todo, isFocus }: { todo: Todo; isFocus?: boolean }) {
     const handleCheckChange = () => {
@@ -11,7 +12,14 @@ export default function TodoItem({ todo, isFocus }: { todo: Todo; isFocus?: bool
     };
 
     return (
-        <div className="-mx-1 flex items-center gap-3 rounded-sm p-1">
+        <motion.div
+            layout
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="-mx-1 flex items-center gap-3 rounded-sm p-1"
+        >
             <Checkbox
                 checked={todo.completed}
                 onCheckedChange={handleCheckChange}
@@ -29,6 +37,6 @@ export default function TodoItem({ todo, isFocus }: { todo: Todo; isFocus?: bool
             >
                 {todo.title}
             </span>
-        </div>
+        </motion.div>
     );
 }
