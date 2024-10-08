@@ -24,9 +24,29 @@ class TodoController extends Controller
             'title' => ['required', 'min:3', 'max:255'],
         ]);
 
-        $lastOrder = $request->user()->todos()->whereDate('created_at', $today)->max('order');
+        $lastIncompleteOrder = $request->user()->todos()
+            ->whereDate('due_date', $today)
+            ->where('completed', false)
+            ->max('order');
 
-        $newOrder = $lastOrder ? $lastOrder + 1 : 1;
+        $firstCompletedOrder = $request->user()->todos()
+            ->whereDate('due_date', $today)
+            ->where('completed', true)
+            ->min('order');
+
+        if ($firstCompletedOrder && $lastIncompleteOrder && $firstCompletedOrder - $lastIncompleteOrder > 1) {
+            $newOrder = $lastIncompleteOrder + 1;
+        } else {
+            // If there is no gap between the last incomplete and first completed item:
+            // Shift all completed items by one
+            // Set new item order to the newly available integer
+            $request->user()->todos()
+                ->whereDate('due_date', $today)
+                ->where('completed', true)
+                ->increment('order');
+
+            $newOrder = $firstCompletedOrder ?: ($lastIncompleteOrder + 1);
+        }
 
         $request->user()->todos()->create([
             'title' => $validated['title'],

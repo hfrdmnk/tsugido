@@ -20,7 +20,13 @@ export default function TodoItem({ todo, isFocus }: { todo: Todo; isFocus?: bool
                         'border-emerald-500 data-[state=checked]:border-emerald-500 data-[state=checked]:bg-emerald-500',
                 )}
             />
-            <span className="flex-1 cursor-pointer select-none" onClick={handleCheckChange}>
+            <span
+                className={cn([
+                    'flex-1 cursor-pointer select-none',
+                    todo.completed && 'text-muted-foreground line-through',
+                ])}
+                onClick={handleCheckChange}
+            >
                 {todo.title}
             </span>
         </div>
